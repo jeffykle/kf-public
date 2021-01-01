@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags static %}
+{% block body_class %}template-gallerypage{% endblock %}
+
+{% block extra_js %}
+<script defer type="module" src="{% static 'js/installationSwiper.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row ">
+
+        <div class="col-12 ">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="page-title">{{ page.title }}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+
+                    {% with categories=page.mediums.all %}
+                    {% if categories %}
+                    <span class="text-muted" style="display: inline;">Medium{% if categories|length > 1 %}s{% endif %}:
+                                        <ul style="display: inline;" id="taglist" >
+                        {% for category in categories %}
+                        <li style="display: inline;">
+                            {{ category.name }}{% if not forloop.last %},{% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    </span>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+
+
+                    {% for block in page.body %}
+                    <section>{% include_block block %}</section>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="row justify-content-center">
+
+                <div class="col">
+                    <div class="swiper-container justify-content-center" id="installation-carousel">
+                        <div class="swiper-wrapper text-center" id="installation-slides">
+                                {% for image in page.gallery_images.all %}
+                                    {% image image.image original as orig %}
+                                    {% image image.image height-500 as lazy %}
+                                    <div class="swiper-slide" style="width: {{lazy.width}}px;">{% image image.image height-500  id=image.id class="installation-image img-responsive" data-src=lazy.url data-srcfull=orig.url data-caption=image.display_caption %}
+                                    <div class="caption truncate-overflow" title="{{ image.display_caption }}">{{ image.display_caption }}</div>{% if item.direct_sale %}&nbsp;<a href="/shop/{{ item.slug }}/"><i class="fas fa-tags"></i>
+
+Item for sale</a> {% endif %}
+                                    </div>
+                               {% endfor %}
+                        </div>
+                        <div class="swiper-scrollbar"></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <div class="swiper-button-prev d-none"></div>
+                </div>
+                <div class="col-10">
+                </div>
+                <div class="col-1">
+                    <div class="swiper-button-next d-none"></div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="text-muted">Click on images to expand them</div>
+            </div>
+            <hr class="my-4">
+            
+            <div class="row">
+                <div class="col text-center">
+                    {% if 'gallery' in request.META.HTTP_REFERER %}
+                    <p><a href="{{request.META.HTTP_REFERER}}">Return to gallery</a></p>
+                    {% else %}
+                    <p><a href="/">Return to the homepage</a></p>
+                    {% endif %}
+                </div>
+            </div>
+       </div>
+   </div>
+</div>
+{% endblock %}

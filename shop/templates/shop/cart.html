@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags static %}
+{% block body_class %}template-gallerypage{% endblock %}
+
+{% block extra_header_js %}
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
+    
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row ">
+
+        <div class="col-12 ">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="page-title">Cart</h1>
+                </div>
+            </div>
+
+            <hr class="my-4">
+             
+                <div class="row flex-row justify-content-center" id="cart-list"> 
+
+{% for item in cart %}
+                    <div class="col-6 col-md-4 mb-3 item-{{ item.pk }}" >
+                    {% image item.main_image height-250 class="float-right img-fluid" %}
+                    </div>
+                    <div class="col-3 col-md-4 item-{{ item.pk }}">
+                        <div class="">
+                        <p> {{ item.title }} </p>
+                        <p class="d-none d-sm-block"> {{ item.description|default_if_none:"" }} </p>
+                        <p class="d-none d-sm-block"> {{ item.direct_sale_extra_description|default_if_none:"" }} </p>
+                        <p class="d-none d-sm-block"> {{ item.sale_disclaimer|default_if_none:"" }} </p>
+                        </div>
+                        <div class="">
+
+
+        <form method="post" class="remove-cart-item" data-item-id="{{ item.pk }}">
+            {% csrf_token %}
+        <input type="hidden"  name="itemId" value="{{ item.pk }}">
+        <button type="submit" class="remove-cart-item-button btn btn-link" onsubmit="return false">Remove from cart</button>
+        </form>
+
+
+                            
+                        </div>
+                        <a tabindex="0" class="d-block d-sm-none"
+                        data-toggle="popover" title="Item details" data-placement="bottom" data-trigger="focus"  data-content="{{ item.description }} {{ item.direct_sale_extra_description }} {{ item.sale_disclaimer }}"><u>Tap for details</u><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill d-inline" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                        </svg>
+                        </a>
+
+                    </div>
+
+                    <div class="col-3 col-md-4 item-{{ item.pk }}">
+
+                    ${{ item.direct_sale_price }}
+
+                    </div>
+                <hr class="my-4 item-{{ item.pk }}">
+
+{% endfor %}
+                </div>
+            </div>
+
+</div>
+
+{% if cart|length > 0 %}
+    
+<div class="row mt-2" id="checkout-total-div">
+            <div class="col-12">
+                <div class="row flex-row justify-content-center">
+
+                    <div class="col-12 col-md-4">
+                    </div>
+                    <div class="col-6 col-md-4">
+                       <strong class="float-right">Cart Total:</strong>
+                    </div>
+                    <div class="col-6 col-md-4">
+                       <strong id="cart-total">${{ cart_total }}</strong>
+                    </div>
+                </div>
+            </div>
+
+</div>
+
+<div class="row mt-2" id="checkout-button-div">
+            <div class="col-12">
+                <div class="row flex-row justify-content-center">
+
+                    <div class="col-6 col-md-4">
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="row justify-content-center">
+
+        <form action="{% url 'shop:checkout' %}" method="post" class="checkout-form">
+            {% csrf_token %}
+            <input type="hidden" name="checkout-items" value="{{ request.session.cart }}">
+            <button type="submit" class="checkout-button card-link btn btn-dark btn-inline w-md-25" > <span class="mx-md-5 mx-0"> Checkout Now </span> </button>
+        </form>
+
+
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+</div>
+
+{% else %}
+<div class="row mt-2">
+            <div class="col-12">
+                <div class="row flex-row justify-content-center">
+
+
+<p>There are no items in your cart.</p>
+
+
+                </div>
+            </div>
+
+</div>{% endif %}
+
+
+
+            <hr class="my-4">
+            
+            <div class="row">
+                <div class="col text-center">
+                    {% if 'gallery' in request.META.HTTP_REFERER %}
+                    <p><a href="{{request.META.HTTP_REFERER}}">Return to gallery</a></p>
+                    {% else %}
+                    <p><a href="/shop/">Return to the shop</a></p>
+                    {% endif %}
+                </div>
+            </div>
+       </div>
+   </div>
+</div>
+{% endblock %}

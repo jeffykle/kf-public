@@ -1,0 +1,21 @@
+steps:
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "-t", "gcr.io/kayleigh-fichten-studio/github.com/jeffykle/kf-app", "."]
+
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/kayleigh-fichten-studio/github.com/jeffykle/kf-app"]
+
+# - name: "gcr.io/google-appengine/exec-wrapper"
+#   args: ["-i", "gcr.io/kayleigh-fichten-studio/github.com/jeffykle/kf-app",
+#          "-s", "kayleigh-fichten-studio:us-central1:mypsql",
+#          "--", "python", "manage.py", "makemigrations"]
+
+# - name: "gcr.io/google-appengine/exec-wrapper"
+#   args: ["-i", "gcr.io/kayleigh-fichten-studio/github.com/jeffykle/kf-app",
+#          "-s", "kayleigh-fichten-studio:us-central1:mypsql",
+#          "--", "python", "manage.py", "migrate"]
+
+# - name: "gcr.io/google-appengine/exec-wrapper"
+#   args: ["-i", "gcr.io/kayleigh-fichten-studio/github.com/jeffykle/kf-app",
+#          "-s", "kayleigh-fichten-studio:us-central1:mypsql",
+#          "--", "python", "manage.py", "collectstatic", "--no-input"]

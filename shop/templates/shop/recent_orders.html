@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags static %}
+{% block body_class %}template-gallerypage{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}
+    
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row ">
+
+        <div class="col-12 ">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="page-title">Recent orders</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+            <hr class="my-4">
+<div class="row">
+
+    <!-- TODO Change orders to expandable accordion -->
+            <div class="col-12">
+                {% for order in orders %}
+                        
+             
+                <div class="row flex-row justify-content-center">
+
+                    <div class="col-6">
+                        <a href="{% url 'shop:order-success' id=order.id %}">{% if order.main_image %}
+                            {% image order.main_image height-100 class="float-right img-fluid" %}
+                            {% else %} Image not found{% endif %}</a>
+                           <p>
+                               
+                           <a href="{% url 'shop:order-success' id=order.id %}"> Click for order details</a>
+                           </p>
+                    </div>
+                    <div class="col-6">
+                        <table class="table order-table">
+                            <tr>
+                              <td><a href="{% url 'shop:order-success' id=order.id %}">Order total:</a></td>
+                              <td><a href="{% url 'shop:order-success' id=order.id %}">${{ order.total }}</a></td>
+                            </tr>
+                            <tr>
+                              <td><a href="{% url 'shop:order-success' id=order.id %}">Number of items:</a></td>
+                              <td><a href="{% url 'shop:order-success' id=order.id %}">{{ order.items.count }}</a></td>
+                            </tr>
+                            <tr>
+                              <td><a href="{% url 'shop:order-success' id=order.id %}">Order status:</a></td>
+                              <td><a href="{% url 'shop:order-success' id=order.id %}">{{ order.status }}</a></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                {% empty %}
+
+                You have no recent orders.
+
+                {% endfor %}
+            </div>
+
+</div>
+
+
+<div class="row mt-2">
+            <div class="col-12">
+                <div class="row flex-row justify-content-center">
+
+                    <div class="col-6 col-md-4">
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="row justify-content-center">
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+</div>
+
+
+
+            <hr class="my-4">
+            
+            <div class="row">
+                <div class="col text-center">
+                    {% if 'gallery' in request.META.HTTP_REFERER %}
+                    <p><a href="{{request.META.HTTP_REFERER}}">Return to gallery</a></p>
+                    {% else %}
+                    <p><a href="/shop/">Return to the shop</a></p>
+                    {% endif %}
+                </div>
+            </div>
+</div>
+
+{% endblock %}

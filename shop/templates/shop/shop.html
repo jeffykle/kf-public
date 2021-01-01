@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block body_class %}gallery-page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/loader.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid flex-grow-1 d-flex">
+
+        <div class="col-12">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="page-title">{{ page.title }}</h1>
+                </div>
+            </div>
+            {% if page.intro|length > 0 %}
+            <div class="row">
+                <div class="col text-center">
+                    <div class="intro">{{ page.intro|richtext }}</div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col text-center">
+                    {% if filtered %}
+                    <div class="tb-padded"><h4 style="display: inline;" >Showing results for: {% for medium in mediums %}{{ medium.name }}{% endfor %}</h4> <a  style="display: inline;" class="text-muted" href="/gallery">   (see all mediums)</a></div>
+                    {% else %}
+
+
+                                <h4><div class="flex-list">
+                    <ul id="taglist">
+                        {% for medium in mediums %}
+                            <li>
+                                <a href="/gallery?medium={{ medium.name }}">{{ medium.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>       
+                           </div> </h4>
+                            {% endif %}
+                </div>
+            </div>
+
+            <div class="row justify-content-center justify-content-md-start infinite-container">
+                {% for item in shop_items %}
+                <div class="col-12 col-sm-6 col-md-4 col-xl-3 infinite-item">
+                    <div class="row">
+                        <div class="col d-flex justify-content-center text-center">
+                            {% with item.specific.main_image as main_image %}
+                                <a href="/shop/{{ item.slug }}/"><div class="shop-image-div">
+                                {% if main_image %}{% image main_image fill-350x350-c75 class="gallery-image img-fluid mx-auto d-block" %}{% endif %}
+                                </div></a>
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col d-flex justify-content-center text-center">
+                            <h4><a href="/shop/{{ item.slug }}/">{{ item.title }}</a></h4>
+                        </div>
+                    </div>
+                    {% if item.direct_sale %}
+                    <div class="row">
+                        <div class="col d-flex justify-content-center text-center">
+                            <a href="/shop/{{ item.slug }}/">{% if item.direct_sale_type %}{{ item.direct_sale_type }} - {% endif %}${{ item.direct_sale_price }}</a> 
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if item.external_sale %}
+                    <div class="row">
+                        <div class="col d-flex justify-content-center text-center">
+                            <a href="/shop/{{ item.slug }}/">{% if item.direct_sale %}Also available{% else %}Available{% endif %} as prints.</a> 
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col d-flex justify-content-center text-center">
+                            {{ item.description }}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="row justify-content-center">
+                    <div style="position: absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center;">
+                        Nothing for now, but I'm busy working new pieces!
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+
+            {% if shop_items.has_next %}
+            <div class="row justify-content-center mt-5 mb-5">
+                    <div class="loader d-none">
+                        <div class="loader-inner ball-pulse" id="dropin-loading">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                    </div>
+            </div>
+            <div class="row justify-content-center">
+                        <a class="infinite-more-link" href="/shop/?page={{ shop_items.next_page_number }}"></a>
+            </div>
+            {% endif %}
+    </div>
+
+</div>
+{% endblock %}
+

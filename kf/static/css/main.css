@@ -1,0 +1,288 @@
+html, body {
+  min-height: 100%;
+}
+
+body {
+    padding-bottom: 50px;
+}
+
+.pager {
+    font-size: 3em;
+}
+
+.fixed-top #first { 
+  -webkit-transition:padding 0.2s ease;
+  -moz-transition:padding 0.2s ease; 
+  -o-transition:padding 0.2s ease;        
+  transition:padding 0.2s ease;  
+}
+
+.affix #first {
+  padding-top: 0.2em !important;
+  padding-bottom: 0.2em !important;
+  -webkit-transition:padding 0.2s linear;
+  -moz-transition:padding 0.2s linear;  
+  -o-transition:padding 0.2s linear;         
+  transition:padding 0.2s linear;  
+}
+
+.installation-helptext {
+    font-size: .8em;
+}
+
+.pager-left, .pager-right {
+    text-decoration: none!important;
+
+}
+/*.pager {
+	position: fixed;
+    top: 50%;
+}
+
+.pager-left {
+    left: 5%;
+}
+.pager-right {
+    right: 5%;
+}*/
+
+.row {
+	/*padding-bottom: 10px;*/
+}
+
+.body {
+    font-family: 'Courier';
+}
+.navbar, h1, h2, h3, h4, h5, h6 {
+	font-family: 'Playfair Display', serif;
+}
+
+.navbar-brand {
+	font-size: 2em;
+}
+
+.gallery-image-div {
+	width: 30em;
+  padding:.5em;
+}
+
+@media (max-width: 2000px) {
+  .gallery-image-div {
+    width: 24em;
+    padding:.5em;
+  }
+
+}
+@media (max-width: 1420px) {
+  .gallery-image-div {
+    width: 20em;
+    padding:.5em;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .gallery-image-div {
+    width: 18em;
+    padding:.5em;
+  }
+
+}
+
+
+.installation-image, .home-page-image {
+  max-width: 90vw;
+  height: auto;
+}
+
+.swiper-container {
+/*    max-width: 1000px;
+    width: 100%;*/
+    /*overflow-x: hidden;*/
+    margin: 0 auto;
+
+}
+
+/*.swiper-slide {
+  max-width: 90vw;
+}
+*/
+.swiper-wrapper {
+    margin-bottom: 2em;
+
+}
+
+
+
+.caption {
+    text-align: center;
+}
+
+
+
+
+.shop-image-div {
+  width: 16em;
+  padding: 1em;
+}
+
+
+.page-title {
+	padding: .1em;
+	margin: .1em;
+}
+
+.tb-padded {
+	padding: 1em 0;
+}
+.flex-list {
+    position: relative;
+    margin: .1em 0;
+    overflow: hidden;
+}
+.flex-list ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*justify-content: space-between;*/
+    margin-left: -1px;
+    padding: 0; /*if using bootstrap*/
+}
+.flex-list li {
+	display: table-cell;
+    flex-grow: 1;
+	flex-basis: 2em;      
+    margin: .1em 0;
+    padding: 0 1.5em;
+    text-align: center;
+    border-left: 1px solid #ccc;
+    background-color: #fff;
+}
+
+
+
+html {
+  --lh: 1.4rem;
+  line-height: var(--lh);
+}
+.truncate-overflow-single-line{
+  --max-lines: 1;
+  position: relative;
+  max-height: calc(var(--lh) * var(--max-lines) +.2em);
+  overflow: hidden;
+  overflow-wrap: break-word;
+  padding: 0 .5em;
+  /*padding-right: 1rem;  */
+  /*space for ellipsis */
+}
+.truncate-overflow {
+  --max-lines: 2;
+  position: relative;
+  max-height: calc(var(--lh) * var(--max-lines));
+  overflow: hidden;
+  overflow-wrap: break-word;
+  padding: 0 .5em;
+  padding-right: 1rem;  
+  /*space for ellipsis */
+}
+.truncate-overflow::before {
+  position: absolute;
+  content: "...";
+  bottom: 0; /* "bottom" */
+  right: 0; /* "right" */
+}
+.truncate-overflow::after {
+  content: "";
+  position: absolute;
+  right: 0; /* "right" */
+  width: 1rem;
+  height: 1rem;
+  background: white;
+}
+
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  width: 45px;
+  height: 45px;
+  transform: translateY(-500%);
+  margin-top: 0px;
+  color: black;
+}
+
+.swiper-button-next {
+  margin-top: 0px;
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  width: 45px;
+  height: 45px;
+  transform: translateY(-500%);
+  color: black;
+}
+
+
+.swiper-scrollbar {
+  /*max-width: 50%;*/
+  align-items: center;
+  white-space:nowrap;
+}
+
+table.ext-links a {
+  font-weight: 400;
+  display: block;
+  padding: 0.35em 1em;
+}
+
+table.ext-links tr:hover, a:hover 
+{
+     color:#EBEBEB; 
+     text-decoration:none; 
+     cursor:pointer;  
+}
+
+.disabled td {
+  color: #4F5F64;
+}
+table.ext-links tbody tr {
+  transition: background 0.25s ease;
+}
+table.ext-links tbody tr:hover {
+  background: #820802;
+}
+
+table.ext-links tr td {
+  font-weight: bolder;
+}
+
+.swiper-container-shop-item {
+
+}
+
+
+
+#g-recaptcha-response {
+    display: block !important;
+    position: absolute;
+    margin: -78px 0 0 0 !important;
+    width: 302px !important;
+    height: 76px !important;
+    z-index: -999999;
+    opacity: 0;
+}
+
+
+.order-table tr:hover { 
+   background: #8E8E8E; 
+}
+.order-table td a { 
+   display: block; 
+   padding: 10px; 
+}
+
+.accountFieldWrapper {
+  /*overflow: hidden;*/
+  max-width: 50ch;
+  
+}

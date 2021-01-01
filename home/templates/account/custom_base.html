@@ -1,0 +1,26 @@
+{# allauth default handling of authentication not needed #}
+
+{% extends "base.html" %}
+
+    {% block body %}
+
+        {% block content %}
+
+            {% if messages %}
+                <div>
+                    <strong>Messages:</strong>
+                    <ul>
+                        {% for message in messages %}
+                        <li>{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+        {% endblock %}
+
+    {% endblock %}
+
+
+    {% block extra_body %}
+    {% endblock %}

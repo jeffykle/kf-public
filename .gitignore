@@ -1,0 +1,17 @@
+*.pyc
+.DS_Store
+*.swp
+/venv/
+/static/
+/media/
+.env
+run.bat
+/node_modules/
+Dockerfile
+.dockerignore
+.db.sqlite3
+package-lock.json
+cache/
+new/
+db/
+dev.py

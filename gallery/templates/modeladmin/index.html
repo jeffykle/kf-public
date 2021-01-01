@@ -1,0 +1,88 @@
+{% extends 'modeladmin/index.html' %}
+{% load i18n modeladmin_tags wagtailimages_tags %}
+
+
+
+{% block titletag %}
+{% if 'galleryitem/?installation'  in request.get_full_path %}
+{{ installation.title }}
+{% else %}
+
+{{ block.super }}
+{% endif %}
+
+{% endblock %}
+
+
+{% block h1 %}
+<h1 {% if view.header_icon %}class="icon icon-{{ view.header_icon }}"{% endif %}>
+    {% if 'galleryitem/?installation'  in request.get_full_path %}
+        {{ installation.title }}
+    {% elif 'shopitem' in request.get_path %}
+    Shop - Listed Gallery Items
+    {% else %}{{ view.get_page_title }}
+    {% endif %}<span></span></h1>
+{% endblock %}
+
+
+
+	{% block search %}{% if 'galleryitem' in request.get_full_path %}{% comment %}{% search_form %}{% endcomment %}{% endif %}{% endblock %}
+
+
+
+
+
+{% block header_extra %}
+
+{% if 'galleryitem/?installation'  in request.get_full_path %}
+{% include 'modeladmin/includes/button.html' with button=view.button_helper.add_gallery_item_button %}
+	{% with page.get_site.root_url|add:"/admin/pages/add/gallery/galleryitem/"|add:request.GET.installation|add:"/?next=/admin/gallery/galleryitem/?installation="|add:request.GET.installation as add_child %}
+	    <a href="{{add_child}}" class="button bicolor icon icon-plus mb-2" title="Add a gallery item to this installation page">Add a gallery item to this installation page</a> 
+	{% endwith %}
+
+
+{% endif %}
+
+{% if 'installationpage' in request.path %}
+<br><br>
+    <div class="text-muted"><b>Installation Pages</b> are how you add art to your gallery. Each <b>Installation Page</b> can have many pieces of pieces of art (<b>Gallery Items</b>).</div>
+    <div class="text-muted">If you want to hide any <b>Installation Page</b>, you can edit it and <b>Unpublish</b> it.</div>
+    <div class="text-muted"><b>Installations</b> are sorted by the date entered (newest first). You can change the date of each one if you want to change the order.</div>
+    <div class="actionbutton">
+        {% include 'modeladmin/includes/button.html' with button=view.button_helper.add_button %}
+    </div>
+{% endif %}
+
+
+{% if 'galleryitem' in request.path %}
+<br><br>
+    <div class="text-muted"><b>Gallery Items</b> can have one or many images of one piece. Once you add a <b>Gallery Item</b> to an <b>Installation Page</b> it will be displayed on your website.</div>
+    <div class="text-muted">If you want to hide any specific <b>Gallery Item</b> from the <b>Installation Page</b>, you can edit it and <b>Unpublish</b> it.</div>
+{% endif %}
+
+
+{% if 'galleryitem/?installation'  in request.get_full_path %}
+<div class="row align-text-top">
+<div class="text-muted">Main image in the gallery:
+{% with installation.specific.main_image as main_image %}
+    {% if main_image %}{% image main_image fill-50x50-c75 class="d-inline" %}{% endif %}
+{% endwith %}
+</div></div>
+{% endif %}
+
+
+{% if 'shopitem' in request.path %}
+<br><br>
+    <div class="text-muted"><b>Shop Items</b> can have one or many images of one piece. Once you add a <b>Gallery Item</b> to an <b>Installation Page</b> it will be displayed on your website.</div>
+    <div class="text-muted">If you want to hide any specific <b>Gallery Item</b> from the <b>Installation Page</b>, you can edit it and <b>Unpublish</b> it.</div>
+    <div class="text-muted"><b>Shop Items</b> are sorted by the last time they were published. To push a <b>Shop Item</b> to the top of the list by <b>Edit</b> and <b>Publish</b> it.</div>
+
+{% endif %}
+
+
+{% endblock %}
+
+
+{% block filters %}
+  {% comment %} make content blank {% endcomment %}
+{% endblock %}

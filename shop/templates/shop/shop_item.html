@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags static %}
+{% block body_class %}template-gallerypage{% endblock %}
+
+{% block extra_js %}
+<script defer type="module" src="{% static 'js/shopItemSwiper.js' %}"></script>
+{% endblock %}
+    
+{% block title %} Shop - {{ shop_page_title }} {% endblock %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row ">
+
+        <div class="col-12 ">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="page-title">{{ shop_title }}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+
+
+                </div>
+            </div>
+
+            <hr class="my-4">
+<div class="row">
+            <div class="col-12 col-md-6">
+                <div class="row justify-content-center">
+
+                    <div class="col">
+                        <div class="swiper-container" id="installation-carousel">
+                            <div class="swiper-wrapper " id="installation-slides">
+                                    {% for image in item.gallery_images.all %}
+                                        {% image image.image original as orig %}
+                                        {% image image.image max-412x732 as lazy %}
+                                        <div class="swiper-slide" style="width: {{lazy.width}}px;">{% image image.image max-412x732 id=image.id class="installation-image img-responsive" data-src=lazy.url data-srcfull=orig.url data-caption=image.display_caption %}
+                                        <div class="caption truncate-overflow" >{{ image.caption }}</div>
+                                        </div>
+                                   {% endfor %}
+                            </div>
+
+                            <div class="swiper-scrollbar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="text-muted">[ click image to enlarge ]</div>
+                </div>
+            </div>
+            <div class="d-none col-md-2"></div>
+            <div class="col-12 col-md-6 text-center">
+                 <div class="row justify-content-center">
+
+<div class="card mb-3 w-100">
+  <h3 class="card-header">{{ item.title }}</h3>
+  <div class="card-body">
+    <h5 class="card-title">
+                    {% if item.direct_sale %}
+                        {{ item.direct_sale_type }} for sale: ${{ item.direct_sale_price }}
+                    {% endif %}
+    </h5>
+    <h6 class="card-subtitle text-muted">
+                    {% with categories=item.mediums.all %}
+                    {% if categories %}
+                    <span class="text-muted" style="display: inline;">Medium{% if categories|length > 1 %}s{% endif %}:
+                                        <ul style="display: inline;" id="taglist" >
+                        {% for category in categories %}
+                        <li style="display: inline;">
+                            {{ category.name }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    </span>
+                    {% endif %}
+                    {% endwith %}
+    </h6>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text">
+        {{ item.description }}
+        From the <a href="{% pageurl item.get_parent %}"><u>{{ item.get_parent.title }}</u></a> collection.
+    </p>
+  </div>
+    {% if item.direct_sale %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Sale details: {{ item.direct_sale_extra_description}}
+        </li>
+    </ul>    
+    {% endif %}
+    {% if item.direct_sale %}
+  <div class="card-body">
+
+        <form method="post" class="add-item-form">
+            {% csrf_token %}
+        <button type="submit" class="add-item-button card-link btn btn-dark" onsubmit="return false">Add To Cart</button>
+        </form>
+
+        <a class="btn btn-dark d-none mt-3" id="goto-checkout" href="/shop/cart/">Go To Checkout</a>
+  </div>
+
+  <div class="card-footer text-muted">
+    {{ item.sale_disclaimer }}
+  </div>
+    {% endif %}
+</div>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title"><a href="https://society6.com/kayleighfichtenstudio">Purchase Prints</a></h4>
+    <h6 class="card-subtitle  text-muted"><a href="https://society6.com/kayleighfichtenstudio">Available at Society6 <img width="25" height="25" src="{% static 'images/s6.jpg' %}"></a></h6>
+{% if item.external_sale %}
+    <p class="card-text mt-2">The following varieties are available.</p>
+                <div class="row justify-content-center">
+            {% for link in item.external_links.all %}
+
+            <div class="col-12 col-sm-4"><a href="{{ link.url }}" class="btn btn-light mb-2">{{ link.description }}</a></div>
+
+            {% endfor %}
+            </div>
+
+
+{% endif %}
+  </div>
+  <div class="card-footer bg-primary text-white">
+      <a href="https://society6.com/kayleighfichtenstudio" class="text-white">Check out all my prints at society6.com/kayleighfichtenstudio</a>
+    </div>
+</div>
+
+
+
+                </div>
+            </div>
+</div>
+
+            <hr class="my-4">
+            
+            <div class="row">
+                <div class="col text-center">
+                    {% if 'gallery' in request.META.HTTP_REFERER %}
+                    <p><a href="{{request.META.HTTP_REFERER}}">Return to gallery</a></p>
+                    {% else %}
+                    <p><a href="/shop/">Return to the shop</a></p>
+                    {% endif %}
+                </div>
+            </div>
+       </div>
+   </div>
+</div>
+{% endblock %}

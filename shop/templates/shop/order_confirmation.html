@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+<head>
+	{% load wagtailimages_tags %}
+  <style type="text/css">
+    @supports -ko-blockdefs {
+    	width { label: Width; widget: integer; min: 500; max: 900; }
+    	face { label: Font; widget: text; category: style; }
+    	serifFace { label: Font Serif; extend: face; category: style; }
+    	sansFace { label: Font Sans; extend: face; category: style; }
+    	gutterWidth { label: Gutter; widget: integer; max: 40; min: 10; }
+    	template { label: Template; properties: bodyWidth=660 gutterWidth=20 }
+    	insertWidth { label: Inset Width; widget: integer; max: 600; min: 100; }
+    	heroBlock { properties: insertWidth=340; }
+
+      url { label: Link; widget: url }
+      src { label: Image; widget: src }
+      alt {
+        label: Alternative Text;
+        widget: text;
+        help: Alternative text will be shown on email clients that does not download image automatically;
+      }
+
+      text { label: Paragraph; widget: text }
+      title { label: Title; widget: text }
+      subTitle { label: Subtitle; }
+
+      link {
+      	label: Link;
+      	properties: url text;
+      }
+
+      image { label: Image; properties: src url alt }
+
+      bodyTheme { label: Body; }
+      headerBlock { label: Header; }
+      heroBlock { label: Hero; }
+      threetwoBlock { label: 3x2 Articles; }
+      twoColumnBlock { label: 2 Columns; }
+      socialBlock { labsl: Social; }
+      footerBlock { label: Footer; }
+
+
+
+    }
+ 	</style>
+</head>
+	<body style="background-color:#202020; color: #FFFFFF; margin:0;" text="#FFFFFF">
+		<center data-ko-container="main">
+
+
+			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="background-color:#202020;" data-ko-block="threetwoBlock">
+				<tr>
+					<td align="center" height="100%" valign="top" width="100%" style="background-color:#F5F5F5;">
+						<!--[if mso]>
+						<table align="center" border="0" cellspacing="0" cellpadding="0" width="660" style="-ko-attr-width: @[_root_.bodyWidth]">
+						<tr>
+						<td align="center" valign="top" width="660" style="-ko-attr-width: @[_root_.bodyWidth]">
+						<![endif]-->
+						<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px; -ko-max-width:@[_root_.bodyWidth]px">
+
+							<tr>
+								<td align="center" valign="top" style="padding:20px 0; -ko-padding:@[_root_.gutterWidth]px 0">
+									<!-- // 3X2 GRID -->
+									<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px; -ko-max-width:@[_root_.bodyWidth]px">
+										<tr>
+											<td align="center" valign="top" style="padding-bottom:10px; -ko-padding-bottom:@[Math.floor(_root_.gutterWidth / 2)]px">
+												<h2 data-ko-editable="title" style="color:#202020; font:24px/28px Rawlinson, Georgia, 'Times', 'Times New Roman', serif; -ko-font:24px/28px @_root_.serifFace; margin:10px 0; padding:0; text-align:center;">Thank you for your order!</h2>
+												<p data-ko-editable="subTitle" style="color:#606060; font:16px/22px Frutiger, 'Frutiger Linotype', 'Helvetica Neue', Helvetica, Arial, sans-serif; -ko-font:16px/22px @_root_.sansFace; margin:0 10px 10px; padding:0; text-align:center;">This email confirms the order you placed with Kayleigh Fichten Studio.</p>
+											</td>
+										</tr>
+										<tr>
+											<td align="center" valign="top" style="padding-bottom:10px; -ko-padding-bottom:@[Math.floor(_root_.gutterWidth / 2)]px">
+												<h2 data-ko-editable="title" style="color:#202020; font:24px/28px Rawlinson, Georgia, 'Times', 'Times New Roman', serif; -ko-font:24px/28px @_root_.serifFace; margin:10px 0; padding:0; text-align:center;">Confirmation number: {{ order.pk }}</h2>
+											</td>
+										</tr>
+										
+									</table>
+									<!-- 3X2 GRID // -->
+								</td>
+							</tr>
+						</table>
+						<!--[if mso]>
+						</td>
+						</tr>
+						</table>
+						<![endif]-->
+					</td>
+				</tr>
+				<!-- 1-COLUMN SCAFFOLD // -->
+
+			</table>
+
+			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="background-color:#202020;" data-ko-block="socialBlock">
+
+				<!-- // 1-COLUMN SCAFFOLD -->
+				<tr>
+					<td align="center" height="100%" valign="top" width="100%" style="background-color:#FFFFFF;">
+						<!--[if mso]>
+						<table align="center" border="0" cellspacing="0" cellpadding="0" width="660" style="-ko-attr-width: @[_root_.bodyWidth]">
+						<tr>
+						<td align="center" valign="top" width="660" style="-ko-attr-width: @[_root_.bodyWidth]">
+						<![endif]-->
+						{% for item in order.items.all %}
+						<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px; -ko-max-width:@[_root_.bodyWidth]px">
+							<tr>
+								<td align="center" valign="top" style="padding-top:10px; -ko-padding-top:@[Math.floor(_root_.gutterWidth / 2)]px; padding-bottom:30px; -ko-padding-bottom:@[Math.floor(_root_.gutterWidth * 3 / 2)]px">
+									<!-- // SOCIAL MEDIA -->
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px; -ko-max-width:@[_root_.bodyWidth]px">
+										<tr>
+											<td align="left" valign="top" style="padding:10px; -ko-padding:@[Math.floor(_root_.gutterWidth / 2)]px">
+												<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#FAFAFA; border-bottom:2px solid #E0E0E0;">
+													<tr>
+														<td align="center" valign="top" style="padding-top:20px; -ko-padding-top:@[_root_.gutterWidth]px; padding-bottom:10px; -ko-padding-bottom:@[Math.floor(_root_.gutterWidth / 2)]px">
+															<h4 data-ko-editable="title" style="color:#202020; font:16px/20px Rawlinson, Georgia, 'Times', 'Times New Roman', serif; -ko-font:16px/20px @_root_.serifFace; letter-spacing:1px; margin:0 0 10px 0; padding:0;">{{ item.title }}</h4>
+														</td>
+													</tr>
+													<tr>
+														<td align="center" valign="top" style="font-size:0;">
+															<!--[if mso]>
+															<table align="center" border="0" cellspacing="0" cellpadding="0" width="640" style="-ko-attr-width: @[_root_.bodyWidth - _root_.gutterWidth]">
+															<tr>
+															<td align="center" valign="top" width="320" style="-ko-attr-width:@[Math.floor((_root_.bodyWidth - _root_.gutterWidth)/2)]">
+															<![endif]-->
+															<div style="display:inline-block; min-width:190px; -ko-min-width:@[Math.floor(_root_.bodyWidth * .3)]; max-width:50%; width:100%;">
+																<table align="center" border="0" cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td rowspan="0" align="center" valign="middle" width="24" style="padding-right:10px; -ko-padding-right:@[Math.floor(_root_.gutterWidth / 2)]px; padding-bottom:20px; -ko-padding-bottom:@[_root_.gutterWidth]px">
+																			{% image item.main_image width-200 as item_image %}
+																			<img src="https://www.kayleighfichtenstudio.com{{ item_image.url }}" style="border:0; display:block;"></a>
+																		</td>
+																	</tr>
+
+																</table>
+															</div>
+															<!--[if mso]>
+															</td>
+															<td align="center" valign="top" width="320" style="-ko-attr-width:@[Math.floor((_root_.bodyWidth - _root_.gutterWidth)/2)]">
+															<![endif]-->
+															<div style="display:inline-block; min-width:190px; -ko-min-width:@[Math.floor(_root_.bodyWidth * .3)]; max-width:50%; width:100%;">
+																<table align="center" border="0" cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td align="center" valign="middle" width="24" style="padding-right:10px; -ko-padding-right:@[Math.floor(_root_.gutterWidth / 2)]px; padding-bottom:20px; -ko-padding-bottom:@[_root_.gutterWidth]px">
+																			<h5 data-ko-editable="title" style="color:#202020; font:16px/20px Rawlinson, Georgia, 'Times', 'Times New Roman', serif; -ko-font:16px/20px @_root_.serifFace; letter-spacing:1px; margin:0 0 10px 0; padding:0;">{{ item.description }}</h5>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td align="center" valign="middle" width="24" style="padding-right:10px; -ko-padding-right:@[Math.floor(_root_.gutterWidth / 2)]px; padding-bottom:20px; -ko-padding-bottom:@[_root_.gutterWidth]px">
+																			<h5 data-ko-editable="title" style="color:#202020; font:16px/20px Rawlinson, Georgia, 'Times', 'Times New Roman', serif; -ko-font:16px/20px @_root_.serifFace; letter-spacing:1px; margin:0 0 10px 0; padding:0;">${{ item.direct_sale_price }}</h5>
+																		</td>
+																	</tr>
+
+																</table>
+															</div>
+															<!--[if mso]>
+															</td>
+															</tr>
+															</table>
+															<![endif]-->
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+									<!-- SOCIAL MEDIA // -->
+								</td>
+							</tr>
+						</table>
+						{% endfor %}
+						<!--[if mso]>
+						</td>
+						</tr>
+						</table>
+						<![endif]-->
+					</td>
+				</tr>
+
+			</table>
+			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="background-color:#202020;" data-ko-block="twoColumnBlock">
+
+				<!-- // 2-COLUMN SCAFFOLD -->
+				<tr>
+					<td align="center" height="100%" valign="top" width="100%" style="background-color:#FFFFFF;">
+						<!--[if mso]>
+						<table align="center" border="0" cellspacing="0" cellpadding="0" width="660" style="-ko-attr-width: @[_root_.bodyWidth]">
+						<tr>
+						<td align="center" valign="top" width="660" style="-ko-attr-width: @[_root_.bodyWidth]">
+						<![endif]-->
+						<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px; -ko-max-width:@[_root_.bodyWidth]px">
+							<tr>
+								<td align="center" valign="top"  style="font-size:0; padding-top:30px; -ko-padding-top:@[Math.floor(_root_.gutterWidth * 3 / 2)]px">
+									<!--[if mso]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="660" style="-ko-attr-width: @[_root_.bodyWidth]">
+									<tr>
+									<td align="left" valign="top" width="330" style="-ko-attr-width: @[_root_.bodyWidth / 2]">
+									<![endif]-->
+									<div style="display:inline-block; max-width:330px; -ko-max-width:@[_root_.bodyWidth / 2]px; vertical-align:top; width:100%;">
+										<table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:330px; -ko-max-width:@[_root_.bodyWidth / 2]px">
+											<tr>
+												<td align="center" valign="top">
+													<!-- // TITLED IMAGE WITH CAPTION -->
+													<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px; -ko-max-width:@[_root_.bodyWidth]px">
+														<tr>
+															<td align="left" valign="top" style="font-size:0; padding:10px; -ko-padding: @[Math.floor(_root_.gutterWidth / 2)]px">
+
+																<table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:320px; -ko-max-width:@[Math.floor((_root_.bodyWidth - _root_.gutterWidth)/2)]px;">
+																	<tr>
+																		<td align="left" valign="top" style="padding:10px; -ko-padding:@[Math.floor(_root_.gutterWidth / 2)]px">
+																			<h3 data-ko-editable="leftSubTitle" style="color:#202020; font:20px/24px Rawlinson, Georgia, 'Times', 'Times New Roman', serif; -ko-font:20px/24px @_root_.serifFace; margin:0 0 10px; padding:0; text-align:left;">Order total: ${{ order.total }}</h3>
+																			<h4 data-ko-editable="leftSubTitle" style="color:#202020; font:20px/24px Rawlinson, Georgia, 'Times', 'Times New Roman', serif; -ko-font:20px/24px @_root_.serifFace; margin:0 0 10px; padding:0; text-align:left;">Shipping address:</h4>
+																			<div data-ko-editable="leftText" data-ko-wrap="false">
+					<p data-ko-editable="title" style="color:#202020; font:16px/20px Rawlinson, Georgia, 'Times', 'Times New Roman', serif; -ko-font:16px/20px @_root_.serifFace; letter-spacing:1px; margin:0 0 10px 0; padding:0;">{{ order.html_formatted_shipping_address|safe }}</p>
+
+
+																			</div> 
+																		</td>
+																	</tr>
+																</table>
+																<!--[if mso]>
+																</td>
+																</tr>
+																</table>
+																<![endif]-->
+															</td>
+														</tr>
+													</table>
+													<!-- TITLED IMAGE WITH CAPTION // -->
+												</td>
+											</tr>
+										</table>
+									</div>
+									<!--[if mso]>
+									</td>
+									<td align="left" valign="top" width="330" style="-ko-attr-width: @[_root_.bodyWidth / 2]">
+									<![endif]-->
+									<!--[if mso]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+								</td>
+							</tr>
+						</table>
+						<!--[if mso]>
+						</td>
+						</tr>
+						</table>
+						<![endif]-->
+					</td>
+				</tr>
+				<!-- 2-COLUMN SCAFFOLD // -->
+
+			</table>
+
+			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="background-color:#202020;" data-ko-block="footerBlock">
+
+				<tr>
+					<td align="center" height="100%" valign="top" width="100%" style="background-color:#202020;">
+						<table align="center" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td align="center" valign="top" style="padding:40px 20px 60px; -ko-padding:@[_root_.gutterWidth * 2]px @[_root_.gutterWidth]px @[_root_.gutterWidth * 3]px">
+									<div data-ko-editable="footerText" data-ko-wrap="false">
+									<p style="color:#E0E0E0; font:14px/18px Frutiger, 'Frutiger Linotype', 'Helvetica Neue', Helvetica, Arial, sans-serif; -ko-font:14px/18px @_root_.sansFace; margin:0 0 2px 0; padding:0; text-align:center;">Kayleigh Fichten Studio</p>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" valign="top" style="padding:40px 20px 60px; -ko-padding:@[_root_.gutterWidth * 2]px @[_root_.gutterWidth]px @[_root_.gutterWidth * 3]px">
+									<div data-ko-editable="footerText" data-ko-wrap="false">
+									<p style="color:#AAAAAA; font:14px/18px Frutiger, 'Frutiger Linotype', 'Helvetica Neue', Helvetica, Arial, sans-serif; -ko-font:14px/18px @_root_.sansFace; margin:0 0 20px 0; padding:0; text-align:center;">{{ base_url }}</p>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<!-- 1-COLUMN SCAFFOLD // -->
+			</table>
+		</center>
+	</body>
+</html>

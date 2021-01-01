@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}gallery-page{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid flex-grow-1 d-flex">
+	<div class="row flex-fill flex-column flex-sm-row">
+		<div class="col-1 flex-shrink-1">
+			<div class="row h-100">
+				<div class="col-sm-12 my-auto ">
+					{% if installations.has_previous %}
+					<div class="pager pager-left" style="font-size: 3em;"><a href="/gallery?page={{ installations.previous_page_number  }}">&laquo;</a></div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="col-10 flex-grow-1">
+			<div class="row">
+				<div class="col text-center">
+				    <h1 class="page-title">{{ page.title }}</h1>
+				</div>
+			</div>
+			{% if page.intro|length > 0 %}
+			<div class="row">
+				<div class="col text-center">
+				    <div class="intro">{{ page.intro|richtext }}</div>
+				</div>
+			</div>
+			{% endif %}
+			<div class="row">
+				<div class="col text-center">
+					{% if filtered %}
+					<div class="tb-padded"><h4 style="display: inline;" >Showing results for: {% for medium in mediums %}{{ medium.name }}{% endfor %}</h4> <a  style="display: inline;" class="text-muted" href="/gallery">   (see all mediums)</a></div>
+					{% else %}
+
+
+			                    <h4><div class="flex-list">
+			        <ul id="taglist">
+			            {% for medium in mediums %}
+			                <li>
+			                    <a href="/gallery?medium={{ medium.name }}">{{ medium.name }}</a>
+			                </li>
+			            {% endfor %}
+			        </ul>		
+			               </div> </h4>
+			                {% endif %}
+			    </div>
+			</div>
+
+			<div class="row justify-content-center">
+			    {% for post in installations %}
+			    <div class="col-12 col-sm-6 col-md-4 col-xl-3" >
+			    	<div class="row">
+			    		<div class="col d-flex justify-content-center text-center">
+					        {% with post.specific.main_image as main_image %}
+								<a href="{% pageurl post %}"><div class="gallery-image-div">
+								{% if main_image %}{% image main_image fill-250x250-c75 class="gallery-image img-fluid mx-auto d-block" %}{% endif %}
+								</div></a>
+					        {% endwith %}
+					    </div>
+				    </div>
+				    <div class="row">
+						<div class="col d-flex justify-content-center text-center">
+					        <h4><a href="{% pageurl post %}">{{ post.title }}</a></h4>
+					    </div>
+					</div>
+			    </div>
+			    {% empty %}
+			    No results
+			    {% endfor %}
+			</div>
+		</div>
+
+		<div class="col-1 flex-shrink-1">
+			<div class="row h-100">
+				<div class="col-sm-12 my-auto">
+					{% if installations.has_next %}
+					<div class="pager pager-right" style="font-size: 3em;"><a href ="/gallery?page={{ installations.next_page_number }}">&raquo;</a></div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+{% endblock %}

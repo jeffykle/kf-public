@@ -1,0 +1,17 @@
+Thank you for placing your order with Kayleigh Fichten Studio!
+
+Your Confirmation #: {{ order.id }}
+
+Order details:
+{{ order_item_details }}
+
+Total: ${order.total}
+Date placed: {order.date}
+
+Ship to:
+{{ order.formatted_shipping_address }}
+
+
+--
+
+{{ settings.BASE_URL }}

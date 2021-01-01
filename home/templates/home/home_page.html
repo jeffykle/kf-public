@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailuserbar wagtailcore_tags wagtailimages_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% wagtailuserbar %}
+
+
+{% block extra_css %}
+
+{% endblock extra_css %}
+{% block extra_js %}
+<script type="module" src="{% static 'js/homeSwiper.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+	<div class="row my-4">
+
+		<div class="col-12 ">
+			<div class="col text-center">
+				<h1 class="page-title">{{ page.headline }}</h1>
+			</div>
+		</div>
+	</div>
+	{% if page.body|length %}
+	    
+	<hr>
+	<div class="row my-4">
+		<div class="col text-center">
+			{{ page.body|richtext }}
+		</div>
+	</div>
+	
+	{% endif %}
+	<hr>
+	{% if page.slider_label|length %}
+	    
+	<div class="row ">
+		<div class="col text-center">
+			<h3>{{ page.slider_label }}</h3>
+		</div>
+	</div>
+	
+	{% endif %}
+	<div class="row ">
+		<div class="col text-center">
+			<a class="text-muted" href="/gallery" >[ see more in the gallery ]</a>
+		</div>
+	</div>
+	<div class="row my-4 justify-content-center">
+		<div class="col">
+
+                            <div class="swiper-container" id="home-page-carousel">
+                                <div class="swiper-wrapper" id="installation-slides">
+				{% for item in page.home_page_images.all %}
+				{% image item.home_page_image original as orig %}
+				{% image item.home_page_image height-500 as lazy %}
+                                        <div class="swiper-slide" style="width: {{lazy.width}}px;"><a href="{{ item.installation_page.url }}" >{% image item.home_page_image height-500  class="home-page-image" data-src=lazy.url data-src-full=orig.url data-caption=item.caption %}</a>
+
+                                        </div>
+                                   {% endfor %}
+                                </div>
+                            </div>
+		</div>
+	</div>
+
+	<hr>
+	<div class="row my-4">
+		<div class="col text-center">
+			{{ page.footer|richtext }}
+		</div>
+	</div>
+
+
+
+
+</div>
+{% endblock content %}

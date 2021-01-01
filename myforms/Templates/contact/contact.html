@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags widget_tweaks %}
+{% block body_class %}template-gallerypage{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}
+    
+
+{% block content %}
+
+<div class="container">
+    <div class="row ">
+
+        <div class="col-12 ">
+            <div class="row mb-3">
+                <div class="col text-center">
+                    <h1 class="page-title">{{ page.title }}</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center mb-3">
+			        <div class="intro">{{ self.intro|richtext }}</div>
+			</div>
+            <div class="row justify-content-center">
+
+                <div class="col col-md-6">
+
+    			    <form action="{% pageurl page %}" method="POST">
+                                    {% csrf_token %}
+
+                                    {% for field in form %}
+    			    	<div class="form-group">
+                                         <div class="fieldWrapper">
+                                    {% if field.name != 'wagtailcaptcha' %}
+                                        {{ field.label }}:
+                                            {% if field.help_text|length %}
+                                                <div class="text-muted">{{ field.help_text}}</div>
+                                            {% endif %}
+                                        {% endif %}
+                                        {{ field|add_class:"form-control w-100" }}
+                                        {% if field.name != 'wagtailcaptcha' %}
+                                        <div class="text-warning">{{ field.errors }}</div>
+                                        {% else %}
+                                        <div class="text-warning">Please complete the CAPTCHA.</div>
+                                        {% endif %}
+
+
+                                        </div>
+    					</div>
+
+                                    {% endfor %}
+
+    			        <button type="submit" class="btn btn-dark">
+    			            Submit Form
+    			        </button>
+    			    </form>
+                </div>
+
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'modeladmin/index.html' %}
+{% load i18n modeladmin_tags %}
+
+
+
+{% block header_extra %}
+{% if 'homepageimage'  in request.path %}
+    <a href="/admin/pages/3/edit/" class="button bicolor icon icon-edit mb-2" title="Edit the home page text">Edit the home page</a> 
+{% endif %}
+  {{ block.super }}
+
+{% if 'homepageimage'  in request.path %}
+
+  <hr>
+    <div class="text-muted">Edit the home page to add or remove images to feature them on your home page</div>
+    <div class="text-muted">Don't worry! You won't lose any data when you remove them, it only affects the home page. Click "DELETE" below each image to remove it from the home page.</div>
+    <small class="text-muted">You can rearrange the order with the buttons on the left of each image. Note that the first image will show up in the middle of the home page, and the last image will show up to the left of the first one.</small>
+
+{% endif %}
+
+{% endblock %}
+
+{% block filters %}
+  {% comment %} make content blank {% endcomment %}
+{% endblock %}

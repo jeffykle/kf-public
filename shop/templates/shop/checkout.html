@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags static widget_tweaks %}
+{% block body_class %}template-gallerypage{% endblock %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/loader.css' %}">
+
+
+{% endblock %}
+{% block extra_header_js %}
+<!-- Load the client component. -->
+<script src="https://js.braintreegateway.com/web/3.65.0/js/client.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+<!-- Load the PayPal Checkout component. -->
+<script src="https://js.braintreegateway.com/web/3.65.0/js/paypal-checkout.min.js"></script>
+  <script src="https://js.braintreegateway.com/web/dropin/1.24.0/js/dropin.min.js"></script>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row ">
+
+        <div class="col-12 ">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="page-title">Checkout</h1>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="row flex-row justify-content-center">
+                    
+     
+
+
+<div class="panel-group mb-3" id="accordion">
+  <div class="card">
+    <div class="card-header justify-content-center text-center" id="headingOne">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          <strong>Order total: ${{ order_total }}</strong> 
+      </h4> 
+        </a>
+&nbsp;
+<span class="text-muted" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill d-inline" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"></path>
+                        </svg>
+
+        show order details</span>
+    </div>
+    <div id="collapseOne" class="collapse in">
+      <div class="card-body">
+
+
+                    <div class="row flex-row justify-content-center">
+
+{% for item in cart %}
+                    
+                    <div class="col-3 col-sm-2 col-md-2 m-3">
+                        <div class="row justify-content-center">
+                            {% image item.main_image fill-75x75 class="float-right img-fluid" %}
+                        </div>
+                        <div class="row justify-content-center">
+                            <p> {{ item.title }} </p>
+                        </div>
+                        <div class="row justify-content-center">
+                            <p> ${{ item.direct_sale_price }} </p>
+                        </div>
+                    </div>
+
+{% endfor %}
+
+    </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+                    
+
+
+                </div>
+
+
+                <form id="order-form" onsubmit="return false">
+
+                        <div class="row flex-row justify-content-center mb-3">
+                            <div class="col-3 float-right text-right">
+                                Choose a shipping address:
+                            </div>
+                            <div class="col-9 col-md-5 float-left">
+                                <div class="row">
+                                    <select class="form-control w-100 w-md-50" id="address-select">
+                                        <option hidden disabled selected value> -- select an option -- </option>
+                                    {% for adr in user_addresses %}
+                                        <option value="{{ adr.id }}">{{adr.formatted}}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="row text-right float-right">
+                                    <a href="#" id="edit-address" class="collapse in ">Change address</a>
+                                </div>
+                            </div>
+                            <div class="col-3 d-none d-md-block">
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <form method="post" id="add-address-form" onsubmit="return false">
+                        <div class="row flex-row justify-content-center mb-3">
+                            <div class="col-12 col-md-3 float-none text-center float-md-right text-md-right collapse show " id="add-address-button">
+                                - or - <a data-toggle="collapse" aria-expanded="false" data-target=".collapseTwo" aria-controls="geo-address geo-address-2 geo-address-submit" > <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/></svg> add a new adress</a>
+                            </div>
+                            <div class="col-9 col-md-5 float-left collapse in collapseTwo" id="geo-address">
+                                {% csrf_token %}
+
+                                {% for field in address_form %}
+                                     <div class="fieldWrapper" id="places-result">
+                                    {{ field.errors }}
+                                    Street Address:
+                                    {{ field|add_class:"form-control w-100" }}
+
+                                    </div>
+                                {% endfor %}
+                                <div class="add-address-errors"></div>
+                            </div>
+                            <div class="col-3 d-none d-md-block">
+                            </div>
+                        </div>
+                        <div class="row flex-row justify-content-center mb-3 collapse in collapseTwo" id="geo-address-2">
+
+                            <div class="col-12 col-md-3 ">
+                            </div>
+
+                            <div class="col-9 col-md-5 ">
+                                Apt/Unit/Suite/etc. (optional) <input type="text" name="address2" class="form-control" />
+                            </div>
+
+                            <div class="col-3 d-none d-md-block">
+                            </div>
+                        </div>
+                        <div class="row flex-row justify-content-center mb-3 collapse in collapseTwo" id="geo-address-submit">
+                            <div class="col-12 col-md-4">
+                                <button class="btn btn-dark d-inline">Use this address</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row flex-row justify-content-center">
+                        
+                        <div class="loader">
+                            <div class="loader-inner ball-pulse d-none" id="dropin-loading">
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-row justify-content-center d-none" id="dropin-wrapper">
+                        <div id="dropin-container"></div>
+                    </div>
+                    <div class="d-none" id="braintree-submit-div">
+                        <form id="braintree-submit-form" method="post" action="{% url 'shop:payment' %}">
+                            {% csrf_token %}
+
+                            <div class="row flex-row justify-content-center mb-1">
+                                <div class="col-12 text-center">
+                                   <strong> Ship to: </strong>
+                                </div>
+                            </div>
+
+                            <div class="row flex-row justify-content-center mt-5">
+                                <div class="col-3 float-right text-right">
+                                    First name:
+                                </div>
+                                <div class="col-9 col-md-5">
+                                    <input type="text" name="first-name" class="form-control" value="{{ request.user.first_name}}" required />
+                                </div>
+                                <div class="col-3 d-none d-md-block">
+                                </div>
+                                <div class="col-3 float-right text-right">
+                                    Last name:
+                                </div>
+                                <div class="col-9 col-md-5">
+                                    <input type="text" name="last-name" class="form-control" value="{{ request.user.last_name}}" required />
+                                </div>
+                                <div class="col-3 d-none d-md-block">
+                                </div>
+
+                                {# hidden inputs #}
+                                <input type="hidden" name="order-total" value="{{ order_total }}" />
+                            </div>
+                            <div class="row flex-row justify-content-center my-3">
+                                <div class="g-recaptcha" data-sitekey="6LfZBNEZAAAAADd_O2E062BP0IDTIt4lz5hi4NQN"></div>
+                            </div>
+
+                            <div class="row flex-row justify-content-center mb-3">
+
+
+                                <button id="braintree-submit-button" type="submit" value="Submit" class="btn btn-dark ">Complete Purchase</button>
+
+                                <div class="loader d-none" id="checkout-submit-loader">
+                                    <div class="loader-inner ball-pulse">
+                                      <div></div>
+                                      <div></div>
+                                      <div></div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </form>
+
+                    </div>
+     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <script>
+    var braintree_client_token = "{{ braintree_client_token }}";
+    var order_total = {{ order_total }}
+    var csrf_token = '{{ csrf_token }}';
+   
+    </script>
+
+
+{% endblock %}
+
+{% block extra_js %}
+                    {{ address_form.media }} <!-- needed for JS/GoogleMaps lookup -->
+
+<script src="{% static 'js/braintree.js' %}"></script>
+{% endblock %}
+    
