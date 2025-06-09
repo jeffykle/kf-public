@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to Kayleigh Fichten Studio. For my capstone project I decided to build a website for an artist friend that would allow them to showcase and sell their art directly to their audience. 
+Welcome to Kayleigh Fichten Studio. For my capstone project I decided to build a website for an artist friend that would allow them to showcase and sell their art directly to their audience. A brief walkthrough of the website can be found here: https://www.youtube.com/watch?v=m-zYY8UMy6Y
 
 In this introduction I will layout the reasons this web application is distinct from and more complex than the other projects in this course. This web application was developed on Wagtail, a content management system built on Django. The main benefit of Wagtail is the built in admin interface which makes it easy for an end user to engage and add their own content to the site dynamically. To best understand the structure of this application, [a basic understanding of Wagtail may be helpful](https://docs.wagtail.io/en/stable/getting_started/the_zen_of_wagtail.html), although it follows Django's file structure conventions. The center of the Wagtail system focuses on the `Page` class, which combines the power of a database model that also acts like a class based view with built in url routing. Each `Page` model renders a template on the front end of the same name as the `__class__.__name__` (converted from camelCase to snake_case.html) and allows the backend user to add object instances of that `Page` class.
 
